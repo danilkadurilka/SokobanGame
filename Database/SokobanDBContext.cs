@@ -11,9 +11,16 @@ namespace SokobanGame.Database
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=localhost;Database=SokobanDB;Integrated Security=True;TrustServerCertificate=True;");
+                optionsBuilder.UseSqlServer(@"Server=DBSRV\vip2025;Database=KursDS_SokobanDB;Integrated Security=True;TrustServerCertificate=True;");
             }
         }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseSqlServer(@"Server=localhost;Database=SokobanDB;Integrated Security=True;TrustServerCertificate=True;");
+        //    }
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
