@@ -1,0 +1,25 @@
+﻿<Window x:Class="SokobanGame.Views.NameInputWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SokobanGame.Views"
+        mc:Ignorable="d"
+        Title="Сокобан - Введите имя" Height="250" Width="350"
+        Background="Purple"
+        ResizeMode="NoResize"
+        Icon="/Images/sokoban.ico">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+            <TextBlock Text="Введите ваше имя" FontSize="24" FontWeight="Bold"
+                       Foreground="White" HorizontalAlignment="Center" Margin="0 0 0 30"/>
+            <TextBox Name="PlayerNameTextBox"
+                     FontSize="18" Padding="10" Background="#4A2B5A"
+                     Foreground="White" BorderThickness="0" Margin="0 0 0 20">
+            </TextBox>
+            <Button Content="Начать игру" Background="#9B4D96" Foreground="White"
+                    FontSize="18" Padding="20 10" BorderThickness="0" Click="StartGame_Click">
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

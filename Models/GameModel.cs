@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SokobanGame.Models
 {
@@ -12,10 +7,15 @@ namespace SokobanGame.Models
     {
         private int width;
         private int height;
-        private TileType[,] tileMap;
-        private Player player;
+        private string[,] tileMap;
+        private int playerX;
+        private int playerY;
         private int countMoves;
         private DateTime startTime;
+        public GameModel()
+        {
+            StartTime = DateTime.Now;
+        }
         public int Width
         {
             get
@@ -40,7 +40,7 @@ namespace SokobanGame.Models
                 OnPropertyChanged("Height");
             }
         }
-        public TileType[,] TileMap
+        public string[,] TileMap
         {
             get
             {
@@ -52,16 +52,28 @@ namespace SokobanGame.Models
                 OnPropertyChanged("TileMap");
             }
         }
-        public Player Player
+        public int PlayerX
         {
             get
             {
-                return player;
+                return playerX;
             }
             set
             {
-                player = value;
-                OnPropertyChanged("Player");
+                playerX = value;
+                OnPropertyChanged("PlayerX");
+            }
+        }
+        public int PlayerY
+        {
+            get
+            {
+                return playerY;
+            }
+            set
+            {
+                playerY = value;
+                OnPropertyChanged("PlayerY");
             }
         }
         public int CountMoves

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SokobanGame.Models
+﻿namespace SokobanGame.Models
 {
     public class Level
     {
@@ -13,5 +7,7 @@ namespace SokobanGame.Models
         public int Width { get; set; }
         public int Height { get; set; }
         public string MapData { get; set; }
+        public bool IsDefault { get; set; }
+        public virtual ICollection<Record> Records { get; set; }
     }
 }
