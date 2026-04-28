@@ -537,8 +537,6 @@ namespace SokobanGame.ViewModels
         {
             timer?.Stop();
             currentWindow.Close();
-            MenuWindow mainMenu = new();
-            mainMenu.Show();
         }
     }
 }

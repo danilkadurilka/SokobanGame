@@ -1,34 +1,23 @@
 ﻿using SokobanGame.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace SokobanGame.Views
 {
-    /// <summary>
-    /// Логика взаимодействия для NameInputWindow.xaml
-    /// </summary>
     public partial class NameInputWindow : Window
     {
         private SokobanDbContext dbContext;
-        public NameInputWindow()
+        private bool isForEditor;
+
+        public NameInputWindow(bool isForEditor = false)
         {
             InitializeComponent();
             dbContext = new SokobanDbContext();
             dbContext.EnsureDatabaseCreated();
+            this.isForEditor = isForEditor;
         }
 
-        private void StartGame_Click(object sender, RoutedEventArgs e)
+        private void NextStage_Click(object sender, RoutedEventArgs e)
         {
             string playerName = PlayerNameTextBox.Text.Trim();
 
@@ -38,10 +27,18 @@ namespace SokobanGame.Views
                 return;
             }
 
-            LevelSelectionWindow levelSelection = new(playerName);
-            levelSelection.Show();
-            this.Close();
+            if (isForEditor)
+            {
+                LevelEditorWindow levelEditor = new LevelEditorWindow(playerName);
+                levelEditor.Show();
+                this.Close();
+            }
+            else
+            {
+                LevelSelectionWindow levelSelection = new LevelSelectionWindow(playerName);
+                levelSelection.Show();
+                this.Close();
+            }
         }
-
     }
 }

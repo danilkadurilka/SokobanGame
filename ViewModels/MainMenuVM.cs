@@ -105,14 +105,14 @@ namespace SokobanGame.ViewModels
 
         private void OpenNewGame()
         {
-            var nameInputWindow = new NameInputWindow();
+            var nameInputWindow = new NameInputWindow(isForEditor: false);
             nameInputWindow.ShowDialog();
         }
 
         private void OpenLevelEditor()
         {
-            var levelEditorWindow = new LevelEditorWindow();
-            levelEditorWindow.ShowDialog();
+            var nameInputWindow = new NameInputWindow(isForEditor: true);
+            nameInputWindow.ShowDialog();
         }
 
         private void OpenRecords()

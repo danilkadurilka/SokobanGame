@@ -8,6 +8,7 @@
         Title="Сокобан - Введите имя" Height="250" Width="350"
         Background="Purple"
         ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
         Icon="/Images/sokoban.ico">
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
@@ -17,8 +18,8 @@
                      FontSize="18" Padding="10" Background="#4A2B5A"
                      Foreground="White" BorderThickness="0" Margin="0 0 0 20">
             </TextBox>
-            <Button Content="Начать игру" Background="#9B4D96" Foreground="White"
-                    FontSize="18" Padding="20 10" BorderThickness="0" Click="StartGame_Click">
+            <Button Content="Продолжить" Background="#9B4D96" Foreground="White"
+                    FontSize="18" Padding="20 10" BorderThickness="0" Click="NextStage_Click">
             </Button>
         </StackPanel>
     </Grid>
