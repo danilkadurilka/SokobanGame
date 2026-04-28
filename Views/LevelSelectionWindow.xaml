@@ -14,12 +14,10 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
         <Border Grid.Row="0" Background="#6A3E6B" Height="80">
             <TextBlock Text="Выберите уровень" FontSize="24" FontWeight="Bold" Foreground="White" 
                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
-
         <ListBox Name="LevelsListBox" Grid.Row="1" Margin="20" Background="#4A2B5A" BorderThickness="0" Foreground="White" FontSize="16">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -29,11 +27,9 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
         <Border Grid.Row="2" Background="#6A3E6B" Height="70">
             <Button Content="Играть" Background="#9B4D96" Foreground="White" FontSize="18" Padding="30 10"
-                    BorderThickness="0" Click="PlayButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center">
-            </Button>
+                    BorderThickness="0" Click="PlayButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
     </Grid>
 </Window>

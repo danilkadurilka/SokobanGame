@@ -21,23 +21,21 @@ namespace SokobanGame.Views
     /// </summary>
     public partial class LevelSelectionWindow : Window
     {
-        private string _playerName;
+        private string playerName;
         private SokobanDbContext dbContext;
-
         public LevelSelectionWindow(string playerName)
         {
             InitializeComponent();
-            _playerName = playerName;
+            this.playerName = playerName;
             dbContext = new SokobanDbContext();
             dbContext.EnsureDatabaseCreated();
             LevelsListBox.ItemsSource = dbContext.Levels.OrderBy(l => l.Id).ToList();
         }
-
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             if (LevelsListBox.SelectedItem is Level selectedLevel)
             {
-                GameWindow gameWindow = new(selectedLevel, _playerName);
+                GameWindow gameWindow = new(selectedLevel, playerName);
                 gameWindow.Show();
                 this.Close();
             }
