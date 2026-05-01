@@ -69,6 +69,9 @@
                                      FontSize="14"/>
                         </Grid>
                         <Border Background="#6A3E6B" Height="1" Margin="0 15"/>
+                        <TextBlock Text="Название уровня" Foreground="#FFD966" FontSize="14" FontWeight="Bold" Margin="0 0 0 10"/>
+                        <TextBox Text="{Binding LevelName, UpdateSourceTrigger=PropertyChanged}" Background="#2D1B3D" Foreground="White" 
+                                 BorderBrush="#6A3E6B" BorderThickness="1" FontSize="14" Padding="8" Margin="0 0 0 15"/>
                         <TextBlock Text="Настройка игрового поля" Foreground="#FFD966" FontSize="14" FontWeight="Bold" Margin="0 0 0 10"/>
                         <RadioButton GroupName="TileTools" Margin="5" IsChecked="{Binding IsFloorSelected}">
                             <StackPanel Orientation="Horizontal">

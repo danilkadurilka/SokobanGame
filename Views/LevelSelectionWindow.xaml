@@ -15,14 +15,23 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Background="#6A3E6B" Height="80">
-            <TextBlock Text="Выберите уровень" FontSize="24" FontWeight="Bold" Foreground="White" 
+            <StackPanel>
+                <TextBlock Text="Выберите уровень" FontSize="24" FontWeight="Bold" Foreground="White" 
                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Name="PlayerNameText" FontSize="14" Foreground="#FFD966" 
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </StackPanel>
         </Border>
         <ListBox Name="LevelsListBox" Grid.Row="1" Margin="20" Background="#4A2B5A" BorderThickness="0" Foreground="White" FontSize="16">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border Background="Transparent" Padding="15 10">
-                        <TextBlock Text="{Binding Name}" Foreground="White"/>
+                    <Border Background="Transparent" Padding="15 10" Margin="0 2">
+                        <StackPanel>
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="15"/>
+                                <TextBlock Text="{Binding BestMovesText}" FontSize="12" Foreground="LightGray"/>
+                                <TextBlock Text="{Binding BestTimeText}" FontSize="12" Foreground="LightGray"/>
+                                <TextBlock Text="{Binding BestResultText}" FontSize="11" Foreground="#FFD966"/>
+                        </StackPanel>
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>

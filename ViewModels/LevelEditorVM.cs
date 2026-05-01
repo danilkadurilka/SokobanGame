@@ -16,6 +16,7 @@ namespace SokobanGame.ViewModels
         private string currentPlayerName;
         private int width;
         private int height;
+        private string levelName;
         private string selectedTileCommand;
         private ObservableCollection<ObservableCollection<TileVM>> tileRows;
         private ObservableCollection<Level> levels;
@@ -61,6 +62,18 @@ namespace SokobanGame.ViewModels
                     OnPropertyChanged("Height");
                     ResizeMap();
                 }
+            }
+        }
+        public string LevelName
+        {
+            get
+            { 
+                return levelName;
+            }
+            set
+            {
+                levelName = value;
+                OnPropertyChanged("LevelName");
             }
         }
         public ObservableCollection<ObservableCollection<TileVM>> TileRows
@@ -238,25 +251,6 @@ namespace SokobanGame.ViewModels
             selectedTileCommand = "Floor";
             InitializeMap();
         }
-        private bool CheckPerimeterWalls()
-        {
-            for (int x = 0; x < tileRows[0].Count; x++)
-            {
-                if (tileRows[0][x].TileType != "Wall")
-                    return false;
-                if (tileRows[tileRows.Count - 1][x].TileType != "Wall")
-                    return false;
-            }
-            for (int y = 0; y < tileRows.Count; y++)
-            {
-                if (tileRows[y][0].TileType != "Wall")
-                    return false;
-                if (tileRows[y][tileRows[y].Count - 1].TileType != "Wall")
-                    return false;
-            }
-
-            return true;
-        }
         private void InitializeMap()
         {
             tileRows = new ObservableCollection<ObservableCollection<TileVM>>();
@@ -299,7 +293,8 @@ namespace SokobanGame.ViewModels
         private void ExecuteSetTile(object parameter)
         {
             TileVM tile = parameter as TileVM;
-            if (tile == null) return;
+            if (tile == null) 
+                return;
             if (selectedTileCommand == "Player" || selectedTileCommand == "PlayerOnTarget")
                 RemoveExistingPlayer();
             tile.TileType = selectedTileCommand;
@@ -324,6 +319,7 @@ namespace SokobanGame.ViewModels
             string[] mapRows = level.MapData.Split('\n');
             Width = level.Width;
             Height = level.Height;
+            levelName = level.Name;
             ObservableCollection<ObservableCollection<TileVM>> newRows = new ObservableCollection<ObservableCollection<TileVM>>();
             for (int y = 0; y < Height; y++)
             {
@@ -371,16 +367,23 @@ namespace SokobanGame.ViewModels
         }
         private void ExecuteSaveLevel(object parameter)
         {
+            if (string.IsNullOrWhiteSpace(LevelName))
+            {
+                MessageBox.Show("Введите название уровня!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            else if (levels.Any(l => l.Name == LevelName.Trim()))
+            {
+                MessageBox.Show("Уровень с таким названием уже существует! Введите другое название.",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             if (!ValidateMap())
             {
                 MessageBox.Show("На карте должен быть игрок!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            if (!CheckPerimeterWalls())
-            {
-                MessageBox.Show("Стены должны быть по всему периметру карты!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+            
             string mapData = ConvertMapToString();
             if (SelectedLevel != null && SelectedLevel.Id > 0 && !SelectedLevel.IsDefault)
             {
@@ -394,10 +397,9 @@ namespace SokobanGame.ViewModels
             }
             else
             {
-                int newNumber = levels.Count(l => !l.IsDefault) + 1;
                 Level newLevel = new Level
                 {
-                    Name = $"Уровень (создан игроком {currentPlayerName}) {newNumber}",
+                    Name = $"Уровень (создан игроком {currentPlayerName})",
                     Width = Width,
                     Height = Height,
                     MapData = mapData,

@@ -289,7 +289,7 @@ namespace SokobanGame.ViewModels
         private bool CanPushBox(int x, int y)
         {
             if (x < 0 || x >= gameModel.Width || y < 0 || y >= gameModel.Height)
-                return true;
+                return false;
             if (!IsWall(x, y) && !IsBox(x, y))
                 return true;
             else
@@ -297,6 +297,8 @@ namespace SokobanGame.ViewModels
         }
         private void PushBox(int boxX, int boxY, int pushX, int pushY)
         {
+            if (pushX < 0 || pushX >= gameModel.Width || pushY < 0 || pushY >= gameModel.Height)
+                return;
             bool wasOnTarget;
             bool pushOnTarget;
             if (gameModel.TileMap[boxX, boxY] == "BoxOnTarget")
@@ -376,17 +378,37 @@ namespace SokobanGame.ViewModels
                 isGameActive = false;
                 timer.Stop();
                 int timeSeconds = (int)gameModel.CurrentTime.TotalSeconds;
-                Record newRecord = new()
+                int moves = gameModel.CountMoves;
+                Record? existingRecord = dbContext.Records.FirstOrDefault(r => r.LevelId == currentLevel.Id && r.PlayerName == playerName);
+                bool isNewRecord = false;
+                string recordMessage = "";
+                if (existingRecord == null)
                 {
-                    PlayerName = playerName,
-                    LevelId = currentLevel.Id,
-                    CountMoves = gameModel.CountMoves,
-                    Time = timeSeconds,
-                    CompletedAt = DateTime.Now
-                };
-                dbContext.Records.Add(newRecord);
-                dbContext.SaveChanges();
-                string message = "Поздравляем! Уровень пройден!\nХодов: " + gameModel.CountMoves + "\nВремя: " + CurrentTime;
+                    isNewRecord = true;
+                    recordMessage = "Новый рекорд!";
+                }
+                else if (moves < existingRecord.CountMoves || (moves == existingRecord.CountMoves && timeSeconds < existingRecord.Time))
+                {
+                    isNewRecord = true;
+                    recordMessage = "Рекорд улучшен!";
+                    dbContext.Records.Remove(existingRecord);
+                }
+                if (isNewRecord)
+                {
+                    Record newRecord = new()
+                    {
+                        PlayerName = playerName,
+                        LevelId = currentLevel.Id,
+                        CountMoves = moves,
+                        Time = timeSeconds,
+                        CompletedAt = DateTime.Now
+                    };
+                    dbContext.Records.Add(newRecord);
+                    dbContext.SaveChanges();
+                }
+                string message = $"Поздравляем! Уровень пройден!\nХодов: {moves}\nВремя: {CurrentTime}";
+                if (isNewRecord)
+                    message += $"\n\n{recordMessage}";
                 MessageBox.Show(message, "Победа!");
                 BackToMenu();
             }
@@ -401,6 +423,8 @@ namespace SokobanGame.ViewModels
             LoadLevel(currentLevel);
             OnPropertyChanged("Moves");
             OnPropertyChanged("CurrentTime");
+            isGameActive = true;
+            timer.Start();
         }
         private void BackToMenu()
         {
