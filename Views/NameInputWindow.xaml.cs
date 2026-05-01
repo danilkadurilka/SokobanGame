@@ -1,6 +1,5 @@
 ﻿using SokobanGame.Database;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace SokobanGame.Views
 {
@@ -8,7 +7,6 @@ namespace SokobanGame.Views
     {
         private SokobanDbContext dbContext;
         private bool isForEditor;
-
         public NameInputWindow(bool isForEditor = false)
         {
             InitializeComponent();
@@ -20,23 +18,21 @@ namespace SokobanGame.Views
         private void NextStage_Click(object sender, RoutedEventArgs e)
         {
             string playerName = PlayerNameTextBox.Text.Trim();
-
             if (string.IsNullOrWhiteSpace(playerName))
             {
                 MessageBox.Show("Пожалуйста, введите ваше имя!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
             if (isForEditor)
             {
                 LevelEditorWindow levelEditor = new LevelEditorWindow(playerName);
-                levelEditor.Show();
+                levelEditor.ShowDialog();
                 this.Close();
             }
             else
             {
                 LevelSelectionWindow levelSelection = new LevelSelectionWindow(playerName);
-                levelSelection.Show();
+                levelSelection.ShowDialog();
                 this.Close();
             }
         }

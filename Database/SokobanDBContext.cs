@@ -17,15 +17,12 @@ namespace SokobanGame.Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-            {
                 optionsBuilder.UseSqlServer(@"Server=localhost;Database=SokobanDB;Integrated Security=True;TrustServerCertificate=True;");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
             modelBuilder.Entity<Level>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -34,13 +31,11 @@ namespace SokobanGame.Database
                 entity.Property(e => e.Height).IsRequired();
                 entity.Property(e => e.MapData).IsRequired().HasColumnType("nvarchar(max)");
                 entity.Property(e => e.IsDefault).HasDefaultValue(false);
-
                 entity.HasMany(e => e.Records)
                       .WithOne(e => e.Level)
                       .HasForeignKey(e => e.LevelId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
-
             modelBuilder.Entity<Record>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -48,20 +43,17 @@ namespace SokobanGame.Database
                 entity.Property(e => e.CountMoves).IsRequired();
                 entity.Property(e => e.Time).IsRequired();
                 entity.Property(e => e.CompletedAt).IsRequired();
-
                 entity.HasOne(e => e.Level)
                       .WithMany(e => e.Records)
                       .HasForeignKey(e => e.LevelId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
         }
-
         public void EnsureDatabaseCreated()
         {
             Database.EnsureCreated();
             SeedDefaultLevels();
         }
-
         private void SeedDefaultLevels()
         {
             if (!Levels.Any())
@@ -133,7 +125,6 @@ namespace SokobanGame.Database
                         IsDefault = true
                     }
                 ];
-
                 Levels.AddRange(defaultLevels);
                 SaveChanges();
             }

@@ -17,7 +17,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
         <Border Grid.Row="0" Background="#6A3E6B" Height="80">
             <TextBlock Text="❓ Как играть в Сокобан ❓"
                        FontSize="28"
@@ -26,22 +25,19 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
         </Border>
-
         <StackPanel Margin="10" Grid.Row="1">
             <Border Background="#4A2B5A" CornerRadius="10" Padding="20" Margin="0 0 0 15">
-                    <TextBlock TextWrapping="Wrap" Foreground="White" FontSize="14">
+                <TextBlock TextWrapping="Wrap" Foreground="White" FontSize="14">
                         <Run Text="🎮 "/><Run Text="Что такое Сокобан?" FontWeight="Bold" FontSize="16"/><LineBreak/>
                         <Run Text="Сокобан (Sokoban) — классическая японская логическая игра-головоломка, созданная в 1981 году."/>
-                    </TextBlock>
+                </TextBlock>
             </Border>
-
             <Border Background="#4A2B5A" CornerRadius="10" Padding="20" Margin="0 0 0 15">
                 <TextBlock TextWrapping="Wrap" Foreground="White" FontSize="14">
                     <Run Text="🎯 "/><Run Text="Цель игры" FontWeight="Bold" FontSize="16"/><LineBreak/>
                     <Run Text="Переместить все ящики на целевые позиции. Ящики можно только толкать, но не тянуть."/>
                 </TextBlock>
             </Border>
-
             <Border Background="#4A2B5A" CornerRadius="10" Padding="20" Margin="0 0 0 15">
                 <TextBlock TextWrapping="Wrap" Foreground="White" FontSize="14">
                     <Run Text="⌨️ "/><Run Text="Управление" FontWeight="Bold" FontSize="16"/><LineBreak/>
@@ -50,7 +46,6 @@
                     <Run Text="• Esc - выход в меню"/>
                 </TextBlock>
             </Border>
-
             <Border Background="#4A2B5A" CornerRadius="10" Padding="20" Margin="0 0 0 15">
                 <TextBlock TextWrapping="Wrap" Foreground="White" FontSize="14">
                         <Run Text="🏆 "/><Run Text="Рекорды" FontWeight="Bold" FontSize="16"/><LineBreak/>
@@ -58,7 +53,6 @@
                 </TextBlock>
             </Border>
         </StackPanel>
-
         <Border Grid.Row="2" Background="#6A3E6B" Height="70">
             <Button Content="← Вернуться в меню"
                     Background="#9B4D96"

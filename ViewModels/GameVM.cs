@@ -1,6 +1,5 @@
 ﻿using SokobanGame.Database;
 using SokobanGame.Models;
-using SokobanGame.Views;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -17,24 +16,24 @@ namespace SokobanGame.ViewModels
         private bool isGameActive;
         private SokobanDbContext dbContext;
         private ObservableCollection<ObservableCollection<TileVM>> rows;
-
         private ICommand moveUpCommand;
         private ICommand moveDownCommand;
         private ICommand moveLeftCommand;
         private ICommand moveRightCommand;
         private ICommand restartCommand;
         private ICommand backToMenuCommand;
-
         public ObservableCollection<ObservableCollection<TileVM>> Rows
         {
-            get { return rows; }
+            get 
+            {
+                return rows; 
+            }
             set
             {
                 rows = value;
                 OnPropertyChanged("Rows");
             }
         }
-
         public int Moves
         {
             get
@@ -42,7 +41,6 @@ namespace SokobanGame.ViewModels
                 return gameModel.CountMoves;
             }
         }
-
         public string CurrentTime
         {
             get
@@ -53,7 +51,6 @@ namespace SokobanGame.ViewModels
                 return $"{elapsed:mm\\:ss}";
             }
         }
-
         public string PlayerName
         {
             get 
@@ -61,7 +58,6 @@ namespace SokobanGame.ViewModels
                 return playerName; 
             }
         }
-
         public string LevelName
         {
             get
@@ -69,79 +65,60 @@ namespace SokobanGame.ViewModels
                 return currentLevel.Name;
             }
         }
-
         public ICommand MoveUpCommand
         {
             get
             {
                 if (moveUpCommand == null)
-                {
                     moveUpCommand = new RelayCommand(ExecuteMoveUp, CanExecuteMove);
-                }
                 return moveUpCommand;
             }
         }
-
         public ICommand MoveDownCommand
         {
             get
             {
                 if (moveDownCommand == null)
-                {
                     moveDownCommand = new RelayCommand(ExecuteMoveDown, CanExecuteMove);
-                }
                 return moveDownCommand;
             }
         }
-
         public ICommand MoveLeftCommand
         {
             get
             {
                 if (moveLeftCommand == null)
-                {
                     moveLeftCommand = new RelayCommand(ExecuteMoveLeft, CanExecuteMove);
-                }
                 return moveLeftCommand;
             }
         }
-
         public ICommand MoveRightCommand
         {
             get
             {
                 if (moveRightCommand == null)
-                {
                     moveRightCommand = new RelayCommand(ExecuteMoveRight, CanExecuteMove);
-                }
                 return moveRightCommand;
             }
         }
-
         public ICommand RestartCommand
         {
             get
             {
                 if (restartCommand == null)
-                {
                     restartCommand = new RelayCommand(ExecuteRestart);
-                }
                 return restartCommand;
             }
         }
-
         public ICommand BackToMenuCommand
         {
             get
             {
                 if (backToMenuCommand == null)
-                {
                     backToMenuCommand = new RelayCommand(ExecuteBackToMenu);
-                }
                 return backToMenuCommand;
             }
         }
-
         public GameVM(Level level, string playerName, Window currentWindow)
         {
             currentLevel = level;
@@ -163,15 +140,11 @@ namespace SokobanGame.ViewModels
             timer.Tick += Timer_Tick;
             timer.Start();
         }
-
         private void Timer_Tick(object sender, EventArgs e)
         {
             if (isGameActive)
-            {
                 OnPropertyChanged("CurrentTime");
-            }
         }
-
         private void LoadLevel(Level level)
         {
             string[] mapRows = level.MapData.Split('\n');
@@ -179,46 +152,29 @@ namespace SokobanGame.ViewModels
             gameModel.Width = level.Width;
             gameModel.TileMap = new string[level.Width, level.Height];
             Rows = new ObservableCollection<ObservableCollection<TileVM>>();
-
             for (int y = 0; y < level.Height; y++)
             {
                 ObservableCollection<TileVM> row = [];
                 string currentRow;
                 if (y < mapRows.Length)
-                {
                     currentRow = mapRows[y];
-                }
                 else
-                {
                     currentRow = "";
-                }
                 for (int x = 0; x < level.Width; x++)
                 {
                     char c;
                     if (x < currentRow.Length)
-                    {
                         c = currentRow[x];
-                    }
                     else
-                    {
                         c = ' ';
-                    }
-
                     string tileType;
                     bool hasPlayer = false;
-
                     if (c == '#')
-                    {
                         tileType = "Wall";
-                    }
                     else if (c == '$')
-                    {
                         tileType = "Box";
-                    }
                     else if (c == '.')
-                    {
                         tileType = "Target";
-                    }
                     else if (c == '@')
                     {
                         tileType = "Floor";
@@ -227,9 +183,7 @@ namespace SokobanGame.ViewModels
                         gameModel.PlayerY = y;
                     }
                     else if (c == '*')
-                    {
                         tileType = "BoxOnTarget";
-                    }
                     else if (c == '+')
                     {
                         tileType = "Target";
@@ -238,20 +192,15 @@ namespace SokobanGame.ViewModels
                         gameModel.PlayerY = y;
                     }
                     else
-                    {
                         tileType = "Floor";
-                    }
-
                     gameModel.TileMap[x, y] = tileType;
                     row.Add(new TileVM(tileType, hasPlayer));
                 }
                 Rows.Add(row);
             }
-
             OnPropertyChanged("Rows");
             OnPropertyChanged("Moves");
         }
-
         private bool CanExecuteMove(object parameter)
         {
             return isGameActive;
@@ -260,33 +209,25 @@ namespace SokobanGame.ViewModels
         private void ExecuteMoveUp(object parameter)
         {
             if (isGameActive)
-            {
                 Move(0, -1);
-            }
         }
 
         private void ExecuteMoveDown(object parameter)
         {
             if (isGameActive)
-            {
                 Move(0, 1);
-            }
         }
 
         private void ExecuteMoveLeft(object parameter)
         {
             if (isGameActive)
-            {
                 Move(-1, 0);
-            }
         }
 
         private void ExecuteMoveRight(object parameter)
         {
             if (isGameActive)
-            {
                 Move(1, 0);
-            }
         }
 
         private void ExecuteRestart(object parameter)
@@ -303,17 +244,12 @@ namespace SokobanGame.ViewModels
         {
             int newX = gameModel.PlayerX + dx;
             int newY = gameModel.PlayerY + dy;
-
             if (IsWall(newX, newY))
-            {
                 return;
-            }
-
             if (IsBox(newX, newY))
             {
                 int pushX = newX + dx;
                 int pushY = newY + dy;
-
                 if (CanPushBox(pushX, pushY))
                 {
                     PushBox(newX, newY, pushX, pushY);
@@ -332,129 +268,77 @@ namespace SokobanGame.ViewModels
                 UpdateTilesDisplay();
             }
         }
-
         private bool IsWall(int x, int y)
         {
-            if (gameModel.TileMap[x, y] == "Wall")
-            {
+            if (x < 0 || x >= gameModel.Width || y < 0 || y >= gameModel.Height)
                 return true;
-            }
+            if (gameModel.TileMap[x, y] == "Wall")
+                return true;
             else
-            {
                 return false;
-            }
         }
-
         private bool IsBox(int x, int y)
         {
-            if (gameModel.TileMap[x, y] == "Box" || gameModel.TileMap[x, y] == "BoxOnTarget")
-            {
+            if (x < 0 || x >= gameModel.Width || y < 0 || y >= gameModel.Height)
                 return true;
-            }
+            if (gameModel.TileMap[x, y] == "Box" || gameModel.TileMap[x, y] == "BoxOnTarget")
+                return true;
             else
-            {
                 return false;
-            }
         }
-
         private bool CanPushBox(int x, int y)
         {
-            if (!IsWall(x, y) && !IsBox(x, y))
-            {
+            if (x < 0 || x >= gameModel.Width || y < 0 || y >= gameModel.Height)
                 return true;
-            }
+            if (!IsWall(x, y) && !IsBox(x, y))
+                return true;
             else
-            {
                 return false;
-            }
         }
-
         private void PushBox(int boxX, int boxY, int pushX, int pushY)
         {
             bool wasOnTarget;
             bool pushOnTarget;
-
             if (gameModel.TileMap[boxX, boxY] == "BoxOnTarget")
-            {
                 wasOnTarget = true;
-            }
             else
-            {
                 wasOnTarget = false;
-            }
-
             if (gameModel.TileMap[pushX, pushY] == "Target")
-            {
                 pushOnTarget = true;
-            }
             else
-            {
                 pushOnTarget = false;
-            }
-
             if (pushOnTarget)
-            {
                 gameModel.TileMap[pushX, pushY] = "BoxOnTarget";
-            }
             else
-            {
                 gameModel.TileMap[pushX, pushY] = "Box";
-            }
-
             if (wasOnTarget)
-            {
                 gameModel.TileMap[boxX, boxY] = "Target";
-            }
             else
-            {
                 gameModel.TileMap[boxX, boxY] = "Floor";
-            }
         }
-
         private void MovePlayer(int x, int y)
         {
             bool wasOnTarget;
             bool moveToTarget;
             if (gameModel.TileMap[gameModel.PlayerX, gameModel.PlayerY] == "PlayerOnTarget")
-            {
                 wasOnTarget = true;
-            }
             else
-            {
                 wasOnTarget = false;
-            }
-
             if (gameModel.TileMap[x, y] == "Target")
-            {
                 moveToTarget = true;
-            }
             else
-            {
                 moveToTarget = false;
-            }
-
             if (wasOnTarget)
-            {
                 gameModel.TileMap[gameModel.PlayerX, gameModel.PlayerY] = "Target";
-            }
             else
-            {
                 gameModel.TileMap[gameModel.PlayerX, gameModel.PlayerY] = "Floor";
-            }
-
             if (moveToTarget)
-            {
                 gameModel.TileMap[x, y] = "PlayerOnTarget";
-            }
             else
-            {
                 gameModel.TileMap[x, y] = "Player";
-            }
-
             gameModel.PlayerX = x;
             gameModel.PlayerY = y;
         }
-
         private void UpdateTilesDisplay()
         {
             for (int y = 0; y < gameModel.Height; y++)
@@ -462,26 +346,18 @@ namespace SokobanGame.ViewModels
                 for (int x = 0; x < gameModel.Width; x++)
                 {
                     bool hasPlayer;
-
                     if (x == gameModel.PlayerX && y == gameModel.PlayerY)
-                    {
                         hasPlayer = true;
-                    }
                     else
-                    {
                         hasPlayer = false;
-                    }
-
                     Rows[y][x].TileType = gameModel.TileMap[x, y];
                     Rows[y][x].HasPlayer = hasPlayer;
                 }
             }
         }
-
         private void CheckWinCondition()
         {
             bool allBoxesOnTarget = true;
-
             for (int y = 0; y < gameModel.Height; y++)
             {
                 for (int x = 0; x < gameModel.Width; x++)
@@ -492,21 +368,15 @@ namespace SokobanGame.ViewModels
                         break;
                     }
                 }
-
                 if (!allBoxesOnTarget)
-                {
                     break;
-                }
             }
-
             if (allBoxesOnTarget)
             {
                 isGameActive = false;
                 timer.Stop();
-
                 int timeSeconds = (int)gameModel.CurrentTime.TotalSeconds;
-
-                Record newRecord = new Record
+                Record newRecord = new()
                 {
                     PlayerName = playerName,
                     LevelId = currentLevel.Id,
@@ -514,7 +384,6 @@ namespace SokobanGame.ViewModels
                     Time = timeSeconds,
                     CompletedAt = DateTime.Now
                 };
-
                 dbContext.Records.Add(newRecord);
                 dbContext.SaveChanges();
                 string message = "Поздравляем! Уровень пройден!\nХодов: " + gameModel.CountMoves + "\nВремя: " + CurrentTime;
@@ -522,17 +391,17 @@ namespace SokobanGame.ViewModels
                 BackToMenu();
             }
         }
-
         private void RestartGame()
         {
-            gameModel = new GameModel();
-            gameModel.StartTime = DateTime.Now;
-            gameModel.CountMoves = 0;
+            gameModel = new GameModel
+            {
+                StartTime = DateTime.Now,
+                CountMoves = 0
+            };
             LoadLevel(currentLevel);
             OnPropertyChanged("Moves");
             OnPropertyChanged("CurrentTime");
         }
-
         private void BackToMenu()
         {
             timer?.Stop();

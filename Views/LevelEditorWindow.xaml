@@ -7,25 +7,21 @@
         WindowStartupLocation="CenterScreen"
         Background="#2D1B3D"
         ResizeMode="CanResize">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
         <Border Grid.Row="0" Background="#6A3E6B" Height="80">
             <TextBlock Text="✏️Редактор уровней" FontSize="28" FontWeight="Bold" Foreground="White"
                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
-
         <Grid Grid.Row="1" Margin="15">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="280"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
             <Border Grid.Column="0" Background="#4A2B5A" CornerRadius="10" Margin="0 0 10 0">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="15">
@@ -44,12 +40,10 @@
                                 Foreground="White" FontSize="13" FontWeight="Bold" Padding="10 8"
                                 Margin="0 5" BorderThickness="0">
                         </Button>
-
                         <Button Content="💾 Сохранить уровень" Command="{Binding SaveLevelCommand}" Background="#9B4D96"
                                 Foreground="White" FontSize="13" FontWeight="Bold" Padding="10 8"
                                 Margin="0 5" BorderThickness="0">
                         </Button>
-
                         <Button Content="🗑️ Удалить уровень"
                                 Command="{Binding DeleteLevelCommand}" Background="#9B4D96"
                                 Foreground="White" FontSize="13" FontWeight="Bold" Padding="10 8"
@@ -127,17 +121,32 @@
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Button Width="40" 
-                                                    Height="40" 
-                                                    Background="{Binding BackgroundColor}"
-                                                    BorderBrush="Black" 
-                                                    BorderThickness="0.5"
-                                                    Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.SetTileCommand}"
-                                                    CommandParameter="{Binding}">
-                                                <Button.ToolTip>
-                                                    <ToolTip Content="{Binding TooltipText}"/>
-                                                </Button.ToolTip>
-                                            </Button>
+                                            <Border BorderBrush="#6A3E6B" 
+                                                    BorderThickness="0.5" 
+                                                    Background="#2D1B3D"
+                                                    Width="42" 
+                                                    Height="42">
+                                                <Button Width="40" 
+                                                        Height="40" 
+                                                        BorderBrush="Transparent" 
+                                                        BorderThickness="0"
+                                                        Background="Transparent"
+                                                        Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.SetTileCommand}"
+                                                        CommandParameter="{Binding}"
+                                                        Padding="0">
+                                                    <Button.Template>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Border Background="Transparent">
+                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            </Border>
+                                                        </ControlTemplate>
+                                                    </Button.Template>
+                                                    <Image Source="{Binding TileImage}" 
+                                                           Width="40" 
+                                                           Height="40"
+                                                           Stretch="Uniform"/>
+                                                </Button>
+                                            </Border>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>

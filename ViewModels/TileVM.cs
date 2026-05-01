@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace SokobanGame.ViewModels
@@ -13,6 +8,32 @@ namespace SokobanGame.ViewModels
         private string tileType;
         private bool hasPlayer;
         private ImageSource tileImage;
+        private int x;
+        private int y;
+        public int X
+        {
+            get
+            {
+                return x; 
+            }
+            set
+            {
+                x = value;
+                OnPropertyChanged("X");
+            }
+        }
+        public int Y
+        {
+            get
+            { 
+                return y; 
+            }
+            set
+            {
+                y = value;
+                OnPropertyChanged("Y");
+            }
+        }
         public string TileType
         {
             get 
@@ -23,13 +44,16 @@ namespace SokobanGame.ViewModels
             {
                 tileType = value;
                 OnPropertyChanged("TileType");
+                OnPropertyChanged("BackgroundColor");
                 UpdateTileImage();
             }
         }
-
         public bool HasPlayer
         {
-            get { return hasPlayer; }
+            get 
+            { 
+                return hasPlayer; 
+            }
             set
             {
                 hasPlayer = value;
@@ -38,42 +62,33 @@ namespace SokobanGame.ViewModels
                 UpdateTileImage();
             }
         }
-
         public string DisplayType
         {
             get
             {
                 if (HasPlayer)
-                {
                     return "Player";
-                }
                 else
-                {
                     return TileType;
-                }
             }
         }
-
         public ImageSource TileImage
         {
-            get 
-            { 
-                return tileImage; 
-            }
+            get { return tileImage; }
             set
             {
                 tileImage = value;
                 OnPropertyChanged("TileImage");
             }
         }
-
-        public TileVM(string tileType, bool hasPlayer = false)
+        public TileVM(string tileType, bool hasPlayer = false, int x = 0, int y = 0)
         {
             this.tileType = tileType;
             this.hasPlayer = hasPlayer;
+            this.x = x;
+            this.y = y;
             UpdateTileImage();
         }
-
         private void UpdateTileImage()
         {
             string imageName = GetImageName();
@@ -82,7 +97,6 @@ namespace SokobanGame.ViewModels
                 TileImage = null;
                 return;
             }
-
             try
             {
                 string imagePath = $"pack://application:,,,/Images/{imageName}";
@@ -93,11 +107,9 @@ namespace SokobanGame.ViewModels
                 TileImage = null;
             }
         }
-
         private string GetImageName()
         {
             string displayType = DisplayType;
-
             if (displayType == "Wall")
                 return "wall.png";
             else if (displayType == "Box")
@@ -111,9 +123,7 @@ namespace SokobanGame.ViewModels
             else if (displayType == "PlayerOnTarget")
                 return "player_on_target.png";
             else
-            {
                 return null;
-            }
         }
     }
 }

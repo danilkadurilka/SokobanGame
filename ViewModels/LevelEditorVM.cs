@@ -17,7 +17,7 @@ namespace SokobanGame.ViewModels
         private int width;
         private int height;
         private string selectedTileCommand;
-        private ObservableCollection<ObservableCollection<TileItemVM>> tileRows;
+        private ObservableCollection<ObservableCollection<TileVM>> tileRows;
         private ObservableCollection<Level> levels;
         private Level selectedLevel;
         private bool isFloorSelected = true;
@@ -63,7 +63,7 @@ namespace SokobanGame.ViewModels
                 }
             }
         }
-        public ObservableCollection<ObservableCollection<TileItemVM>> TileRows
+        public ObservableCollection<ObservableCollection<TileVM>> TileRows
         {
             get
             { 
@@ -226,7 +226,6 @@ namespace SokobanGame.ViewModels
                 return setTileCommand;
             }
         }
-
         public LevelEditorVM(Window currentWindow, string playerName)
         {
             this.currentWindow = currentWindow;
@@ -239,15 +238,33 @@ namespace SokobanGame.ViewModels
             selectedTileCommand = "Floor";
             InitializeMap();
         }
+        private bool CheckPerimeterWalls()
+        {
+            for (int x = 0; x < tileRows[0].Count; x++)
+            {
+                if (tileRows[0][x].TileType != "Wall")
+                    return false;
+                if (tileRows[tileRows.Count - 1][x].TileType != "Wall")
+                    return false;
+            }
+            for (int y = 0; y < tileRows.Count; y++)
+            {
+                if (tileRows[y][0].TileType != "Wall")
+                    return false;
+                if (tileRows[y][tileRows[y].Count - 1].TileType != "Wall")
+                    return false;
+            }
 
+            return true;
+        }
         private void InitializeMap()
         {
-            tileRows = new ObservableCollection<ObservableCollection<TileItemVM>>();
+            tileRows = new ObservableCollection<ObservableCollection<TileVM>>();
             for (int y = 0; y < Height; y++)
             {
-                ObservableCollection<TileItemVM> row = new ObservableCollection<TileItemVM>();
+                ObservableCollection<TileVM> row = new ObservableCollection<TileVM>();
                 for (int x = 0; x < Width; x++) 
-                    row.Add(new TileItemVM(x, y, "Floor"));
+                    row.Add(new TileVM("Floor", false, x,y));
                 tileRows.Add(row);
             }
             OnPropertyChanged("TileRows");
@@ -261,17 +278,17 @@ namespace SokobanGame.ViewModels
                 return;
             }
 
-            ObservableCollection<ObservableCollection<TileItemVM>> newRows = new ObservableCollection<ObservableCollection<TileItemVM>>();
+            ObservableCollection<ObservableCollection<TileVM>> newRows = new ObservableCollection<ObservableCollection<TileVM>>();
 
             for (int y = 0; y < Height; y++)
             {
-                ObservableCollection<TileItemVM> newRow = new ObservableCollection<TileItemVM>();
+                ObservableCollection<TileVM> newRow = new ObservableCollection<TileVM>();
                 for (int x = 0; x < Width; x++)
                 {
                     if (y < tileRows.Count && x < tileRows[y].Count)
                         newRow.Add(tileRows[y][x]);
                     else
-                        newRow.Add(new TileItemVM(x, y, "Floor"));
+                        newRow.Add(new TileVM("Floor", false, x, y));
                 }
                 newRows.Add(newRow);
             }
@@ -281,7 +298,7 @@ namespace SokobanGame.ViewModels
 
         private void ExecuteSetTile(object parameter)
         {
-            TileItemVM tile = parameter as TileItemVM;
+            TileVM tile = parameter as TileVM;
             if (tile == null) return;
             if (selectedTileCommand == "Player" || selectedTileCommand == "PlayerOnTarget")
                 RemoveExistingPlayer();
@@ -307,10 +324,10 @@ namespace SokobanGame.ViewModels
             string[] mapRows = level.MapData.Split('\n');
             Width = level.Width;
             Height = level.Height;
-            ObservableCollection<ObservableCollection<TileItemVM>> newRows = new ObservableCollection<ObservableCollection<TileItemVM>>();
+            ObservableCollection<ObservableCollection<TileVM>> newRows = new ObservableCollection<ObservableCollection<TileVM>>();
             for (int y = 0; y < Height; y++)
             {
-                ObservableCollection<TileItemVM> newRow = new ObservableCollection<TileItemVM>();
+                ObservableCollection<TileVM> newRow = new ObservableCollection<TileVM>();
                 string rowData;
                 if (y < mapRows.Length)
                     rowData = mapRows[y];
@@ -338,7 +355,7 @@ namespace SokobanGame.ViewModels
                         tileType = "PlayerOnTarget";
                     else
                         tileType = "Floor";
-                    newRow.Add(new TileItemVM(x, y, tileType));
+                    newRow.Add(new TileVM(tileType, false, x,y));
                 }
                 newRows.Add(newRow);
             }
@@ -357,6 +374,11 @@ namespace SokobanGame.ViewModels
             if (!ValidateMap())
             {
                 MessageBox.Show("На карте должен быть игрок!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            if (!CheckPerimeterWalls())
+            {
+                MessageBox.Show("Стены должны быть по всему периметру карты!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             string mapData = ConvertMapToString();
