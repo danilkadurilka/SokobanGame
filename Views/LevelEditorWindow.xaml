@@ -6,7 +6,8 @@
         Width="950"
         WindowStartupLocation="CenterScreen"
         Background="#2D1B3D"
-        ResizeMode="CanResize">
+        ResizeMode="CanResize"
+        Icon="/Images/sokoban.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
