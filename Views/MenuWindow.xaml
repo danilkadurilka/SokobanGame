@@ -5,89 +5,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SokobanGame.Views"
         mc:Ignorable="d"
-        Title="Сокобан - Главное меню" Height="600" Width="400"
+        Height="600" Width="400"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Background="Purple"
-        Icon="/Images/sokoban.ico">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="#6A3E6B" Height="100">
-            <TextBlock Text="СОКОБАН"
-                       FontSize="36"
-                       FontWeight="Bold"
-                       Foreground="White"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       FontFamily="Segoe UI"/>
-        </Border>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Content="🎮 Новая игра"
-                    Command="{Binding NewGameCommand}"
-                    Width="250"
-                    Height="60"
-                    FontSize="20"
-                    FontWeight="Bold"
-                    Background="#9B4D96"
-                    Foreground="White"
-                    BorderThickness="0"
-                    Margin="10">
-            </Button>
-            <Button Content="✏️ Редактор уровней"
-                    Command="{Binding LevelEditorCommand}"
-                    Width="250"
-                    Height="60"
-                    FontSize="20"
-                    FontWeight="Bold"
-                    Background="#9B4D96"
-                    Foreground="White"
-                    BorderThickness="0"
-                    Margin="10">
-            </Button>
-            <Button Content="🏆 Рекорды"
-                    Command="{Binding RecordsCommand}"
-                    Width="250"
-                    Height="60"
-                    FontSize="20"
-                    FontWeight="Bold"
-                    Background="#9B4D96"
-                    Foreground="White"
-                    BorderThickness="0"
-                    Margin="10">
-            </Button>
-            <Button Content="❓ Как играть"
-                    Command="{Binding InstructionsCommand}"
-                    Width="250"
-                    Height="60"
-                    FontSize="20"
-                    FontWeight="Bold"
-                    Background="#9B4D96"
-                    Foreground="White"
-                    BorderThickness="0"
-                    Margin="10">
-            </Button>
-            <Button Content="🚪 Выход"
-                    Command="{Binding ExitCommand}"
-                    Width="250"
-                    Height="60"
-                    FontSize="20"
-                    FontWeight="Bold"
-                    Background="#9B4D96"
-                    Foreground="White"
-                    BorderThickness="0"
-                    Margin="10">
-            </Button>
-        </StackPanel>
-        <Border Grid.Row="2" Background="#6A3E6B" Height="50">
-            <TextBlock Text="Японская логическая игра | Развивайте когнитивные навыки"
-                       Foreground="White"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       FontSize="12"/>
-        </Border>
-    </Grid>
+        WindowStyle="None"
+        AllowsTransparency="True">
+    <Border Background="Purple">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Background="#6A3E6B" Height="100">
+                <Grid>
+                    <Image Source="/Images/sokoban.ico" Width="50" Height="50" HorizontalAlignment="Left" Margin="65 0 0 0"/>
+                    <TextBlock Text="СОКОБАН" FontSize="36" FontWeight="Bold" Foreground="White"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20 0 0 0"/>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <Button Command="{Binding ExitCommand}" Background="Transparent" BorderBrush="Transparent">
+                            <Image Source="/Images/close.png" Width="50" Height="50"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Content="🎮 Новая игра"
+                        Command="{Binding NewGameCommand}" Width="250" Height="60" FontSize="20" FontWeight="Bold"
+                        Background="#9B4D96" Foreground="White" BorderThickness="0" Margin="10">
+                </Button>
+                <Button Content="✏️ Редактор уровней"
+                        Command="{Binding LevelEditorCommand}" Width="250" Height="60" FontSize="20" FontWeight="Bold"
+                        Background="#9B4D96" Foreground="White" BorderThickness="0" Margin="10">
+                </Button>
+                <Button Content="🏆 Рекорды"
+                        Command="{Binding RecordsCommand}" Width="250" Height="60" FontSize="20" FontWeight="Bold"
+                        Background="#9B4D96" Foreground="White" BorderThickness="0" Margin="10">
+                </Button>
+                <Button Content="❓ Как играть"
+                        Command="{Binding InstructionsCommand}" Width="250" Height="60" FontSize="20" FontWeight="Bold"
+                        Background="#9B4D96" Foreground="White" BorderThickness="0" Margin="10">
+                </Button>
+                <Button Content="🚪 Выход" 
+                        Command="{Binding ExitCommand}" Width="250" Height="60" FontSize="20" FontWeight="Bold"
+                        Background="#9B4D96" Foreground="White" BorderThickness="0" Margin="10">
+                </Button>
+            </StackPanel>
+            <Border Grid.Row="2" Background="#6A3E6B" Height="50">
+                <TextBlock Text="Японская логическая игра | Развивайте когнитивные навыки"
+                           Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>
+            </Border>
+        </Grid>
+    </Border>
 </Window>

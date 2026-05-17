@@ -5,41 +5,54 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SokobanGame.Views"
         mc:Ignorable="d"
-        Title="Сокобан - Выбор уровня" Height="450" Width="400"
+        Height="450" Width="400"
         WindowStartupLocation="CenterScreen"
         Background="Purple"
-        Icon="/Images/sokoban.ico">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="#6A3E6B" Height="80">
-            <StackPanel>
-                <TextBlock Text="Выберите уровень" FontSize="24" FontWeight="Bold" Foreground="White" 
-                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBlock Name="PlayerNameText" FontSize="14" Foreground="#FFD966" 
-                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </StackPanel>
-        </Border>
-        <ListBox Name="LevelsListBox" Grid.Row="1" Margin="20" Background="#4A2B5A" BorderThickness="0" Foreground="White" FontSize="16">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border Background="Transparent" Padding="15 10" Margin="0 2">
-                        <StackPanel>
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True">
+    <Border Background="Purple" CornerRadius="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Background="#6A3E6B" Height="80">
+                <Grid>
+                    <StackPanel>
+                        <TextBlock Text="Выберите уровень" FontSize="24" FontWeight="Bold" Foreground="White" 
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Name="PlayerNameText" FontSize="14" Foreground="#FFD966" 
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 15 0">
+                        <Button Click="CloseWindow_Click" Background="Transparent" BorderBrush="Transparent">
+                            <Image Source="/Images/close.png" Width="40" Height="40"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <ListBox Name="LevelsListBox" Grid.Row="1" Margin="20" Background="#4A2B5A" 
+                     BorderThickness="0" Foreground="White" FontSize="16">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="Transparent" Padding="15 10" Margin="0 2">
+                            <StackPanel>
                                 <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="15"/>
                                 <TextBlock Text="{Binding BestMovesText}" FontSize="12" Foreground="LightGray"/>
                                 <TextBlock Text="{Binding BestTimeText}" FontSize="12" Foreground="LightGray"/>
                                 <TextBlock Text="{Binding BestResultText}" FontSize="11" Foreground="#FFD966"/>
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Border Grid.Row="2" Background="#6A3E6B" Height="70">
-            <Button Content="Играть" Background="#9B4D96" Foreground="White" FontSize="18" Padding="30 10"
-                    BorderThickness="0" Click="PlayButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        </Border>
-    </Grid>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Border Grid.Row="2" Background="#6A3E6B" Height="70">
+                <Button Content="Играть" Background="#9B4D96" Foreground="White" FontSize="18" 
+                        Padding="30 10" BorderThickness="0" Click="PlayButton_Click" 
+                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+        </Grid>
+    </Border>
 </Window>

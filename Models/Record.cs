@@ -10,4 +10,10 @@
         public DateTime CompletedAt { get; set; }
         public virtual Level Level { get; set; }
     }
+    public class RecordDisplay
+    {
+        public string DisplayText { get; set; }
+        public string MovesText { get; set; }
+        public string TimeText { get; set; }
+    }
 }

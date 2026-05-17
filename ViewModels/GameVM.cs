@@ -205,41 +205,34 @@ namespace SokobanGame.ViewModels
         {
             return isGameActive;
         }
-
         private void ExecuteMoveUp(object parameter)
         {
             if (isGameActive)
                 Move(0, -1);
         }
-
         private void ExecuteMoveDown(object parameter)
         {
             if (isGameActive)
                 Move(0, 1);
         }
-
         private void ExecuteMoveLeft(object parameter)
         {
             if (isGameActive)
                 Move(-1, 0);
         }
-
         private void ExecuteMoveRight(object parameter)
         {
             if (isGameActive)
                 Move(1, 0);
         }
-
         private void ExecuteRestart(object parameter)
         {
             RestartGame();
         }
-
         private void ExecuteBackToMenu(object parameter)
         {
             BackToMenu();
         }
-
         private void Move(int dx, int dy)
         {
             int newX = gameModel.PlayerX + dx;

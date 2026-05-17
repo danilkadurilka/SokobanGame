@@ -69,11 +69,16 @@ namespace SokobanGame.Views
             if (LevelsListBox.SelectedItem is LevelToDisplay selectedLevel)
             {
                 GameWindow gameWindow = new(selectedLevel.OriginalLevel, playerName);
-                gameWindow.ShowDialog();
+                gameWindow.Show();
                 this.Close();
             }
             else
                 MessageBox.Show("Пожалуйста, выберите уровень!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
+        private void CloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

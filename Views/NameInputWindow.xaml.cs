@@ -14,7 +14,6 @@ namespace SokobanGame.Views
             dbContext.EnsureDatabaseCreated();
             this.isForEditor = isForEditor;
         }
-
         private void NextStage_Click(object sender, RoutedEventArgs e)
         {
             string playerName = PlayerNameTextBox.Text.Trim();
@@ -35,6 +34,10 @@ namespace SokobanGame.Views
                 levelSelection.ShowDialog();
                 this.Close();
             }
+        }
+        private void CloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

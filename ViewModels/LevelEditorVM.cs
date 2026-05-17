@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SokobanGame.Database;
 using SokobanGame.Models;
-using SokobanGame.Views;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -26,12 +24,14 @@ namespace SokobanGame.ViewModels
         private bool isTargetSelected;
         private bool isBoxSelected;
         private bool isPlayerSelected;
+        private bool isLevelNameEditable = true;
+        private bool isWidthHeightEditable = true;
+        private bool isTileEditingEnabled = true;
         private ICommand newLevelCommand;
         private ICommand saveLevelCommand;
         private ICommand deleteLevelCommand;
         private ICommand backToMenuCommand;
         private ICommand setTileCommand;
-
         public int Width
         {
             get 
@@ -88,7 +88,6 @@ namespace SokobanGame.ViewModels
                 OnPropertyChanged("TileRows"); 
             }
         }
-
         public ObservableCollection<Level> Levels
         {
             get
@@ -96,7 +95,42 @@ namespace SokobanGame.ViewModels
                 return levels; 
             }
         }
-
+        public bool IsLevelNameEditable
+        {
+            get 
+            {
+                return isLevelNameEditable;
+            }
+            set
+            {
+                isLevelNameEditable = value;
+                OnPropertyChanged("IsLevelNameEditable");
+            }
+        }
+        public bool IsWidthHeightEditable
+        {
+            get 
+            {
+                return isWidthHeightEditable;
+            }
+            set
+            {
+                isWidthHeightEditable = value;
+                OnPropertyChanged("IsWidthHeightEditable");
+            }
+        }
+        public bool IsTileEditingEnabled
+        {
+            get 
+            { 
+                return isTileEditingEnabled; 
+            }
+            set
+            {
+                isTileEditingEnabled = value;
+                OnPropertyChanged("IsTileEditingEnabled");
+            }
+        }
         public Level SelectedLevel
         {
             get 
@@ -110,10 +144,21 @@ namespace SokobanGame.ViewModels
                 if (value != null)
                 {
                     LoadLevel(value);
+                    LevelName = value.Name;
+                    bool isDefault = value.IsDefault;
+                    IsLevelNameEditable = !isDefault;
+                    IsWidthHeightEditable = !isDefault;
+                    IsTileEditingEnabled = !isDefault;
+                }
+                else
+                {
+                    LevelName = "";
+                    IsLevelNameEditable = true;
+                    IsWidthHeightEditable = true;
+                    IsTileEditingEnabled = true;
                 }
             }
         }
-
         public bool IsFloorSelected
         {
             get 
@@ -124,11 +169,10 @@ namespace SokobanGame.ViewModels
             {
                 isFloorSelected = value;
                 OnPropertyChanged("IsFloorSelected");
-                if (value) 
+                if (value && IsTileEditingEnabled)
                     selectedTileCommand = "Floor";
             }
         }
-
         public bool IsWallSelected
         {
             get 
@@ -139,11 +183,10 @@ namespace SokobanGame.ViewModels
             {
                 isWallSelected = value;
                 OnPropertyChanged("IsWallSelected");
-                if (value) 
+                if (value && IsTileEditingEnabled)
                     selectedTileCommand = "Wall";
             }
         }
-
         public bool IsTargetSelected
         {
             get
@@ -154,11 +197,10 @@ namespace SokobanGame.ViewModels
             {
                 isTargetSelected = value;
                 OnPropertyChanged("IsTargetSelected");
-                if (value) 
+                if (value && IsTileEditingEnabled)
                     selectedTileCommand = "Target";
             }
         }
-
         public bool IsBoxSelected
         {
             get 
@@ -169,11 +211,10 @@ namespace SokobanGame.ViewModels
             {
                 isBoxSelected = value;
                 OnPropertyChanged("IsBoxSelected");
-                if (value)
+                if (value && IsTileEditingEnabled)
                     selectedTileCommand = "Box";
             }
         }
-
         public bool IsPlayerSelected
         {
             get 
@@ -184,12 +225,10 @@ namespace SokobanGame.ViewModels
             {
                 isPlayerSelected = value;
                 OnPropertyChanged("IsPlayerSelected");
-                if (value) 
+                if (value && IsTileEditingEnabled)
                     selectedTileCommand = "Player";
             }
         }
-
-
         public ICommand NewLevelCommand
         {
             get
@@ -199,7 +238,6 @@ namespace SokobanGame.ViewModels
                 return newLevelCommand;
             }
         }
-
         public ICommand SaveLevelCommand
         {
             get
@@ -209,7 +247,6 @@ namespace SokobanGame.ViewModels
                 return saveLevelCommand;
             }
         }
-
         public ICommand DeleteLevelCommand
         {
             get
@@ -219,7 +256,6 @@ namespace SokobanGame.ViewModels
                 return deleteLevelCommand;
             }
         }
-
         public ICommand BackToMenuCommand
         {
             get
@@ -229,7 +265,6 @@ namespace SokobanGame.ViewModels
                 return backToMenuCommand;
             }
         }
-
         public ICommand SetTileCommand
         {
             get
@@ -245,11 +280,20 @@ namespace SokobanGame.ViewModels
             this.currentPlayerName = playerName;
             dbContext = new SokobanDbContext();
             dbContext.EnsureDatabaseCreated();
-            levels = new ObservableCollection<Level>(dbContext.Levels.OrderBy(l => l.Id).ToList());
+            levels = new ObservableCollection<Level>();
+            LoadLevels();
             width = 10;
             height = 10;
             selectedTileCommand = "Floor";
             InitializeMap();
+        }
+        private void LoadLevels()
+        {
+            levels.Clear();
+            List<Level> levelsFromDb = dbContext.Levels.OrderBy(l => l.Id).ToList();
+            foreach (var level in levelsFromDb)
+                levels.Add(level);
+            OnPropertyChanged("Levels");
         }
         private void InitializeMap()
         {
@@ -263,7 +307,6 @@ namespace SokobanGame.ViewModels
             }
             OnPropertyChanged("TileRows");
         }
-
         private void ResizeMap()
         {
             if (tileRows == null)
@@ -271,9 +314,7 @@ namespace SokobanGame.ViewModels
                 InitializeMap();
                 return;
             }
-
             ObservableCollection<ObservableCollection<TileVM>> newRows = new ObservableCollection<ObservableCollection<TileVM>>();
-
             for (int y = 0; y < Height; y++)
             {
                 ObservableCollection<TileVM> newRow = new ObservableCollection<TileVM>();
@@ -289,7 +330,6 @@ namespace SokobanGame.ViewModels
             tileRows = newRows;
             OnPropertyChanged("TileRows");
         }
-
         private void ExecuteSetTile(object parameter)
         {
             TileVM tile = parameter as TileVM;
@@ -299,7 +339,6 @@ namespace SokobanGame.ViewModels
                 RemoveExistingPlayer();
             tile.TileType = selectedTileCommand;
         }
-
         private void RemoveExistingPlayer()
         {
             for (int y = 0; y < tileRows.Count; y++)
@@ -311,7 +350,6 @@ namespace SokobanGame.ViewModels
                 }
             }
         }
-
         private void LoadLevel(Level level)
         {
             if (level == null || string.IsNullOrEmpty(level.MapData)) 
@@ -319,7 +357,7 @@ namespace SokobanGame.ViewModels
             string[] mapRows = level.MapData.Split('\n');
             Width = level.Width;
             Height = level.Height;
-            levelName = level.Name;
+            LevelName = level.Name;
             ObservableCollection<ObservableCollection<TileVM>> newRows = new ObservableCollection<ObservableCollection<TileVM>>();
             for (int y = 0; y < Height; y++)
             {
@@ -372,7 +410,7 @@ namespace SokobanGame.ViewModels
                 MessageBox.Show("Введите название уровня!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            else if (levels.Any(l => l.Name == LevelName.Trim()))
+            if (levels.Any(l => l.Name == LevelName.Trim() && (SelectedLevel == null || l.Id != SelectedLevel.Id)))
             {
                 MessageBox.Show("Уровень с таким названием уже существует! Введите другое название.",
                     "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -383,10 +421,10 @@ namespace SokobanGame.ViewModels
                 MessageBox.Show("На карте должен быть игрок!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            
             string mapData = ConvertMapToString();
             if (SelectedLevel != null && SelectedLevel.Id > 0 && !SelectedLevel.IsDefault)
             {
+                SelectedLevel.Name = LevelName.Trim();
                 SelectedLevel.Width = Width;
                 SelectedLevel.Height = Height;
                 SelectedLevel.MapData = mapData;
@@ -399,7 +437,7 @@ namespace SokobanGame.ViewModels
             {
                 Level newLevel = new Level
                 {
-                    Name = $"Уровень (создан игроком {currentPlayerName})",
+                    Name = LevelName.Trim(),
                     Width = Width,
                     Height = Height,
                     MapData = mapData,

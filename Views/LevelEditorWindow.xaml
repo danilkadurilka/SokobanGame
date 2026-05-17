@@ -2,169 +2,169 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Сокобан - Редактор уровней" 
-        Height="950" 
-        Width="950"
+        Height="1000" 
+        Width="1400"
         WindowStartupLocation="CenterScreen"
         Background="#2D1B3D"
         ResizeMode="CanResize"
-        Icon="/Images/sokoban.ico">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="#6A3E6B" Height="80">
-            <TextBlock Text="✏️Редактор уровней" FontSize="28" FontWeight="Bold" Foreground="White"
-                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        </Border>
-        <Grid Grid.Row="1" Margin="15">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="280"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" Background="#4A2B5A" CornerRadius="10" Margin="0 0 10 0">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel Margin="15">
-                        <TextBlock Text="Список уровней" Foreground="#FFD966" FontSize="16" FontWeight="Bold" Margin="0 0 0 10"/>
-                        <ListBox Name="LevelsListBox" ItemsSource="{Binding Levels}" SelectedItem="{Binding SelectedLevel}"
-                                 Background="#2D1B3D" BorderThickness="0" Foreground="White" Height="200" Margin="0 0 0 10">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Background="Transparent" Padding="8 5">
-                                        <TextBlock Text="{Binding Name}" Foreground="White" TextWrapping="Wrap"/>
-                                    </Border>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                        <Button Content="➕ Новый уровень" Command="{Binding NewLevelCommand}" Background="#9B4D96"
-                                Foreground="White" FontSize="13" FontWeight="Bold" Padding="10 8"
-                                Margin="0 5" BorderThickness="0">
+        WindowStyle="None"
+        AllowsTransparency="True">
+    <Border Background="#2D1B3D">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Background="#6A3E6B" Height="80">
+                <Grid>
+                    <TextBlock Text="✏️ Редактор уровней" 
+                               FontSize="28" FontWeight="Bold" Foreground="White"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 15 0">
+                        <Button Command="{Binding BackToMenuCommand}" Background="Transparent" BorderBrush="Transparent">
+                            <Image Source="/Images/close.png" Width="40" Height="40"/>
                         </Button>
-                        <Button Content="💾 Сохранить уровень" Command="{Binding SaveLevelCommand}" Background="#9B4D96"
-                                Foreground="White" FontSize="13" FontWeight="Bold" Padding="10 8"
-                                Margin="0 5" BorderThickness="0">
-                        </Button>
-                        <Button Content="🗑️ Удалить уровень"
-                                Command="{Binding DeleteLevelCommand}" Background="#9B4D96"
-                                Foreground="White" FontSize="13" FontWeight="Bold" Padding="10 8"
-                                Margin="0 5" BorderThickness="0">
-                        </Button>
-                        <Border Background="#6A3E6B" Height="1" Margin="0 15"/>
-                        <TextBlock Text="Размер поля" Foreground="#FFD966" FontSize="14" FontWeight="Bold" Margin="0 0 0 10"/>
-                        <Grid Margin="0 5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="Ширина:" Foreground="White" VerticalAlignment="Center"/>
-                            <TextBox Grid.Column="1" Text="{Binding Width, UpdateSourceTrigger=PropertyChanged}" Background="#2D1B3D" 
-                                     Foreground="White" Margin="5 0 15 0" BorderThickness="1"
-                                     BorderBrush="#6A3E6B" FontSize="14"/>
-                            <TextBlock Grid.Column="2" Text="Высота:" Foreground="White" VerticalAlignment="Center"/>
-                            <TextBox Grid.Column="3" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}" Background="#2D1B3D" 
-                                     Foreground="White"  Margin="5 0 0 0" BorderThickness="1"
-                                     BorderBrush="#6A3E6B"
-                                     FontSize="14"/>
-                        </Grid>
-                        <Border Background="#6A3E6B" Height="1" Margin="0 15"/>
-                        <TextBlock Text="Название уровня" Foreground="#FFD966" FontSize="14" FontWeight="Bold" Margin="0 0 0 10"/>
-                        <TextBox Text="{Binding LevelName, UpdateSourceTrigger=PropertyChanged}" Background="#2D1B3D" Foreground="White" 
-                                 BorderBrush="#6A3E6B" BorderThickness="1" FontSize="14" Padding="8" Margin="0 0 0 15"/>
-                        <TextBlock Text="Настройка игрового поля" Foreground="#FFD966" FontSize="14" FontWeight="Bold" Margin="0 0 0 10"/>
-                        <RadioButton GroupName="TileTools" Margin="5" IsChecked="{Binding IsFloorSelected}">
-                            <StackPanel Orientation="Horizontal">
-                                <Border Width="30" Height="30" Background="LightGray" Margin="0 0 10 0" CornerRadius="4"/>
-                                <TextBlock Text="Пол" Foreground="White" FontSize="13" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </RadioButton>
-                        <RadioButton GroupName="TileTools" Margin="5" IsChecked="{Binding IsWallSelected}">
-                            <StackPanel Orientation="Horizontal">
-                                <Border Width="30" Height="30" Background="DarkGray" Margin="0 0 10 0" CornerRadius="4"/>
-                                <TextBlock Text="Стена" Foreground="White" FontSize="13" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </RadioButton>
-                        <RadioButton GroupName="TileTools" Margin="5" IsChecked="{Binding IsTargetSelected}">
-                            <StackPanel Orientation="Horizontal">
-                                <Border Width="30" Height="30" Background="Gold" Margin="0 0 10 0" CornerRadius="4"/>
-                                <TextBlock Text="Цель" Foreground="White" FontSize="13" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </RadioButton>
-                        <RadioButton GroupName="TileTools" Margin="5" IsChecked="{Binding IsBoxSelected}">
-                            <StackPanel Orientation="Horizontal">
-                                <Border Width="30" Height="30" Background="SaddleBrown" Margin="0 0 10 0" CornerRadius="4"/>
-                                <TextBlock Text="Ящик" Foreground="White" FontSize="13" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </RadioButton>
-                        <RadioButton GroupName="TileTools" Margin="5" IsChecked="{Binding IsPlayerSelected}">
-                            <StackPanel Orientation="Horizontal">
-                                <Border Width="30" Height="30" Background="DodgerBlue" Margin="0 0 10 0" CornerRadius="4"/>
-                                <TextBlock Text="Игрок" Foreground="White" FontSize="13" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </RadioButton>
                     </StackPanel>
-                </ScrollViewer>
+                </Grid>
             </Border>
-            <Border Grid.Column="1" Background="#2D1B3D" CornerRadius="10" BorderBrush="#4A2B5A" BorderThickness="2">
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                    <ItemsControl Name="EditorBoard" ItemsSource="{Binding TileRows}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <ItemsControl ItemsSource="{Binding}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal"/>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <Border BorderBrush="#6A3E6B" 
-                                                    BorderThickness="0.5" 
-                                                    Background="#2D1B3D"
-                                                    Width="42" 
-                                                    Height="42">
-                                                <Button Width="40" 
-                                                        Height="40" 
-                                                        BorderBrush="Transparent" 
-                                                        BorderThickness="0"
-                                                        Background="Transparent"
-                                                        Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.SetTileCommand}"
-                                                        CommandParameter="{Binding}"
-                                                        Padding="0">
-                                                    <Button.Template>
-                                                        <ControlTemplate TargetType="Button">
-                                                            <Border Background="Transparent">
-                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                            </Border>
-                                                        </ControlTemplate>
-                                                    </Button.Template>
-                                                    <Image Source="{Binding TileImage}" 
-                                                           Width="40" 
-                                                           Height="40"
-                                                           Stretch="Uniform"/>
-                                                </Button>
-                                            </Border>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
+            <Grid Grid.Row="1" Margin="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="280"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Background="#4A2B5A" CornerRadius="10" Margin="0 0 10 0">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="15">
+                            <TextBlock Text="Список уровней" Foreground="#FFD966" FontSize="16" FontWeight="Bold" Margin="0 0 0 10"/>
+                            <ListBox Name="LevelsListBox" ItemsSource="{Binding Levels}" SelectedItem="{Binding SelectedLevel}"
+                                     Background="#2D1B3D" BorderThickness="0" Foreground="White" Height="200" Margin="0 0 0 10">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="Transparent" Padding="8 5">
+                                            <TextBlock Text="{Binding Name}" Foreground="White" TextWrapping="Wrap"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <Button Content="➕ Новый уровень" Command="{Binding NewLevelCommand}" Background="#9B4D96"
+                                    Foreground="White" FontSize="13" FontWeight="Bold" Padding="10 8"
+                                    Margin="0 5" BorderThickness="0">
+                            </Button>
+                            <Button Content="💾 Сохранить уровень" Command="{Binding SaveLevelCommand}" Background="#9B4D96"
+                                    Foreground="White" FontSize="13" FontWeight="Bold" Padding="10 8"
+                                    Margin="0 5" BorderThickness="0">
+                            </Button>
+                            <Button Content="🗑️ Удалить уровень" Command="{Binding DeleteLevelCommand}" Background="#9B4D96"
+                                    Foreground="White" FontSize="13" FontWeight="Bold" Padding="10 8"
+                                    Margin="0 5" BorderThickness="0" Cursor="Hand">
+                            </Button>
+                            <Border Background="#6A3E6B" Height="1" Margin="0 15"/>
+                            <TextBlock Text="Размер поля" Foreground="#FFD966" FontSize="14" FontWeight="Bold" Margin="0 0 0 10"/>
+                            <Grid Margin="0 5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Ширина:" Foreground="White" VerticalAlignment="Center"/>
+                                <TextBox Grid.Column="1" Text="{Binding Width, UpdateSourceTrigger=PropertyChanged}" 
+                                         Background="#2D1B3D" Foreground="White" Margin="5 0 15 0" 
+                                         BorderThickness="1" BorderBrush="#6A3E6B" FontSize="14"/>
+                                <TextBlock Grid.Column="2" Text="Высота:" Foreground="White" VerticalAlignment="Center"/>
+                                <TextBox Grid.Column="3" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}" 
+                                         Background="#2D1B3D" Foreground="White" Margin="5 0 0 0" 
+                                         BorderThickness="1" BorderBrush="#6A3E6B" FontSize="14"/>
+                            </Grid>
+                            <Border Background="#6A3E6B" Height="1" Margin="0 15"/>
+                            <TextBlock Text="Название уровня" Foreground="#FFD966" FontSize="14" FontWeight="Bold" Margin="0 0 0 10"/>
+                            <TextBox Text="{Binding LevelName, UpdateSourceTrigger=PropertyChanged}" 
+                                     Background="#2D1B3D" Foreground="White" BorderBrush="#6A3E6B" 
+                                     BorderThickness="1" FontSize="14" Padding="8" Margin="0 0 0 15"/>
+                            <TextBlock Text="Настройка игрового поля" Foreground="#FFD966" FontSize="14" FontWeight="Bold" Margin="0 0 0 10"/>
+                            <RadioButton GroupName="TileTools" Margin="5" IsChecked="{Binding IsFloorSelected}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Width="30" Height="30" Background="LightGray" Margin="0 0 5 0" CornerRadius="4"/>
+                                    <TextBlock Text="Пол" Foreground="White" FontSize="13" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton GroupName="TileTools" Margin="5" IsChecked="{Binding IsWallSelected}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Width="30" Height="30" Background="DarkGray" Margin="0 0 5 0" CornerRadius="4"/>
+                                    <TextBlock Text="Стена" Foreground="White" FontSize="13" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton GroupName="TileTools" Margin="5" IsChecked="{Binding IsTargetSelected}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Width="30" Height="30" Background="Gold" Margin="0 0 5 0" CornerRadius="4"/>
+                                    <TextBlock Text="Цель" Foreground="White" FontSize="13" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton GroupName="TileTools" Margin="5" IsChecked="{Binding IsBoxSelected}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Width="30" Height="30" Background="SaddleBrown" Margin="0 0 5 0" CornerRadius="4"/>
+                                    <TextBlock Text="Ящик" Foreground="White" FontSize="13" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </RadioButton>
+                            <RadioButton GroupName="TileTools" Margin="5" IsChecked="{Binding IsPlayerSelected}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Width="30" Height="30" Background="DodgerBlue" Margin="0 0 5 0" CornerRadius="4"/>
+                                    <TextBlock Text="Игрок" Foreground="White" FontSize="13" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </RadioButton>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+                <Border Grid.Column="1" Background="#2D1B3D" CornerRadius="10" BorderBrush="#4A2B5A" BorderThickness="2">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl Name="EditorBoard" ItemsSource="{Binding TileRows}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ItemsControl ItemsSource="{Binding}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="#6A3E6B" BorderThickness="0.5" Background="#2D1B3D" Width="42" Height="42">
+                                                    <Button Width="40" Height="40" BorderBrush="Transparent" 
+                                                            BorderThickness="0" Background="Transparent"
+                                                            Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.SetTileCommand}"
+                                                            CommandParameter="{Binding}" Padding="0">
+                                                        <Button.Template>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <Border Background="Transparent">
+                                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Button.Template>
+                                                        <Image Source="{Binding TileImage}" Width="40" Height="40" Stretch="Uniform"/>
+                                                    </Button>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+            <Border Grid.Row="2" Background="#6A3E6B" Height="60">
+                <Button Content="← Вернуться в меню" Command="{Binding BackToMenuCommand}"
+                        Background="#9B4D96" Foreground="White" FontSize="14" FontWeight="Bold"
+                        Padding="20 10" BorderThickness="0" HorizontalAlignment="Center" 
+                        VerticalAlignment="Center">
+                </Button>
             </Border>
         </Grid>
-        <Border Grid.Row="2" Background="#6A3E6B" Height="60">
-            <Button Content="← Вернуться в меню" Command="{Binding BackToMenuCommand}"
-                    Background="#9B4D96" Foreground="White" FontSize="14" FontWeight="Bold"
-                    Padding="20 10" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-            </Button>
-        </Border>
-    </Grid>
+    </Border>
 </Window>

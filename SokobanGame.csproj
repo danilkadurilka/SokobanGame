@@ -11,9 +11,12 @@
   <ItemGroup>
     <None Remove="Images\box.png" />
     <None Remove="Images\box_on_target.png" />
+    <None Remove="Images\close.png" />
     <None Remove="Images\floor.png" />
+    <None Remove="Images\minimize.png" />
     <None Remove="Images\player.png" />
     <None Remove="Images\player_on_target.png" />
+    <None Remove="Images\resize.png" />
     <None Remove="Images\sokoban.ico" />
     <None Remove="Images\target.png" />
     <None Remove="Images\wall.png" />
@@ -26,13 +29,22 @@
     <Content Include="Images\box_on_target.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\close.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\floor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\minimize.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\player.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\player_on_target.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\resize.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\sokoban.ico">
