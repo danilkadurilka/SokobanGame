@@ -232,7 +232,7 @@ ViewModel для отдельной клетки игрового поля.
 ## Архитектурные особенности
 
 ### MVVM паттерн
-- **Model** - данные и бизнес-логика (`Level`, `Record`, `GameModel`)
+- **Model** - данные (`Level`, `Record`, `GameModel`)
 - **View** - XAML-разметка окон
 - **ViewModel** - связующее звено между Model и View (`GameVM`, `LevelEditorVM` и др.)
 
