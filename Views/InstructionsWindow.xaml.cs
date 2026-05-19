@@ -8,7 +8,6 @@ namespace SokobanGame.Views
         {
             InitializeComponent();
         }
-
         private void BackToMenu_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
