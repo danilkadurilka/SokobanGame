@@ -11,6 +11,22 @@
         Background="Purple"
         WindowStyle="None"
         AllowsTransparency="True">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#9B4D96"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Border Background="Purple">
         <Grid>
             <Grid.RowDefinitions>
@@ -32,24 +48,19 @@
             </Border>
             <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button Content="🎮 Новая игра"
-                        Command="{Binding NewGameCommand}" Width="250" Height="60" FontSize="20" FontWeight="Bold"
-                        Background="#9B4D96" Foreground="White" BorderThickness="0" Margin="10">
+                        Command="{Binding NewGameCommand}" Width="250" Height="60" FontSize="20" FontWeight="Bold" Margin="10">
                 </Button>
                 <Button Content="✏️ Редактор уровней"
-                        Command="{Binding LevelEditorCommand}" Width="250" Height="60" FontSize="20" FontWeight="Bold"
-                        Background="#9B4D96" Foreground="White" BorderThickness="0" Margin="10">
+                        Command="{Binding LevelEditorCommand}" Width="250" Height="60" FontSize="20" FontWeight="Bold" Margin="10">
                 </Button>
                 <Button Content="🏆 Рекорды"
-                        Command="{Binding RecordsCommand}" Width="250" Height="60" FontSize="20" FontWeight="Bold"
-                        Background="#9B4D96" Foreground="White" BorderThickness="0" Margin="10">
+                        Command="{Binding RecordsCommand}" Width="250" Height="60" FontSize="20" FontWeight="Bold" Margin="10">
                 </Button>
                 <Button Content="❓ Как играть"
-                        Command="{Binding InstructionsCommand}" Width="250" Height="60" FontSize="20" FontWeight="Bold"
-                        Background="#9B4D96" Foreground="White" BorderThickness="0" Margin="10">
+                        Command="{Binding InstructionsCommand}" Width="250" Height="60" FontSize="20" FontWeight="Bold" Margin="10">
                 </Button>
                 <Button Content="🚪 Выход" 
-                        Command="{Binding ExitCommand}" Width="250" Height="60" FontSize="20" FontWeight="Bold"
-                        Background="#9B4D96" Foreground="White" BorderThickness="0" Margin="10">
+                        Command="{Binding ExitCommand}" Width="250" Height="60" FontSize="20" FontWeight="Bold" Margin="10">
                 </Button>
             </StackPanel>
             <Border Grid.Row="2" Background="#6A3E6B" Height="50">
