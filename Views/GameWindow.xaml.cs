@@ -34,11 +34,19 @@ namespace SokobanGame.Views
             }
             else if (e.Key == Key.R)
             {
-                viewModel.RestartCommand.Execute(null);
+                MessageBoxResult result = MessageBox.Show("Нажата клавиша R.\nВы действительно хотите сбросить текущий прогресс?", "Подтвердите действие", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                    viewModel.RestartCommand.Execute(null);
+                else
+                    return;
             }
             else if (e.Key == Key.Escape)
             {
-                viewModel.BackToMenuCommand.Execute(null);
+                MessageBoxResult result = MessageBox.Show("Нажата клавиша Escape.\nВы действительно хотите вернуться в главное меню?\nЭто приведет к сбросу текущей игры.", "Подтвердите действие", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                    viewModel.BackToMenuCommand.Execute(null);
+                else
+                    return;
             }
         }
     }
