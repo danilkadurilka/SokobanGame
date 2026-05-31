@@ -11,6 +11,22 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#9B4D96"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Border Background="Purple">
         <Grid>
             <Grid.RowDefinitions>
@@ -30,9 +46,7 @@
                 <TextBox Name="PlayerNameTextBox"
                          FontSize="18" Padding="10" Background="#4A2B5A"
                          Foreground="White" BorderThickness="0" Margin="0 0 0 20"/>
-                <Button Content="Продолжить" Background="#9B4D96" Foreground="White"
-                        FontSize="18" Padding="20 10" BorderThickness="0" 
-                        Click="NextStage_Click"/>
+                <Button Content="Продолжить" FontSize="18" Padding="20 10" Click="NextStage_Click"/>
             </StackPanel>
         </Grid>
     </Border>

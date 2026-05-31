@@ -16,24 +16,13 @@ namespace SokobanGame.Views
         }
         private void LoadRecords()
         {
-            List<LevelRecordsDisplay>? levelsWithRecords = dbContext.Levels.Select(level => new LevelRecordsDisplay
+           var levelsWithRecords = dbContext.Levels.Where(l => l.Records.Any())
+                .Select(level => new
                 {
                     LevelName = level.Name,
-                    Records = dbContext.Records
-                        .Where(r => r.LevelId == level.Id)
-                        .Select(r => new RecordDisplay
-                        {
-                            PlayerName = r.PlayerName,
-                            CountMoves = r.CountMoves,
-                            Time = r.Time,
-                            CompletedAt = r.CompletedAt
-                        })
-                        .OrderBy(r => r.CountMoves)
-                        .ThenBy(r => r.Time)
-                        .ToList()
-                })
-                .Where(l => l.Records.Any())
-                .ToList();
+                    Records = level.Records.OrderBy(r => r.CountMoves).ThenBy(r => r.Time).ToList()
+                }).ToList();
+
             RecordsListBox.ItemsSource = levelsWithRecords;
         }
         private void BackToMenu_Click(object sender, RoutedEventArgs e)

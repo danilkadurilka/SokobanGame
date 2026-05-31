@@ -11,6 +11,22 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         AllowsTransparency="True">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Border Background="Purple">
         <Grid>
             <Grid.RowDefinitions>
@@ -23,7 +39,7 @@
                     <TextBlock Text="Рекорды🏆" FontSize="28" FontWeight="Bold" 
                                Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 15 0">
-                        <Button Click="BackToMenu_Click" Background="Transparent" BorderBrush="Transparent">
+                        <Button Click="BackToMenu_Click">
                             <Image Source="/Images/close.png" Width="40" Height="40"/>
                         </Button>
                     </StackPanel>
@@ -75,11 +91,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-            <Border Grid.Row="2" Background="#6A3E6B" Height="70">
-                <Button Content="← Вернуться в меню" Background="#9B4D96" Foreground="White" 
-                        FontSize="16" Padding="15 8" BorderThickness="0" HorizontalAlignment="Center" 
-                        VerticalAlignment="Center" Click="BackToMenu_Click"/>
-            </Border>
+            <Border Grid.Row="2" Background="#6A3E6B" Height="70"/>
         </Grid>
     </Border>
 </Window>

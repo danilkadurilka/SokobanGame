@@ -9,19 +9,6 @@
         public int Time { get; set; }
         public DateTime CompletedAt { get; set; }
         public virtual Level Level { get; set; }
-    }
-    public class LevelRecordsDisplay
-    {
-        public string LevelName { get; set; }
-        public List<RecordDisplay> Records { get; set; }
-    }
-
-    public class RecordDisplay
-    {
-        public string PlayerName { get; set; }
-        public int CountMoves { get; set; }
-        public int Time { get; set; }
-        public DateTime CompletedAt { get; set; }
         public string MovesText
         {
             get

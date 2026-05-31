@@ -9,6 +9,22 @@
         ResizeMode="CanResize"
         WindowStyle="None"
         AllowsTransparency="True">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#9B4D96"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Border Background="#2D1B3D">
         <Grid>
             <Grid.RowDefinitions>
@@ -47,17 +63,11 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
-                            <Button Content="➕ Новый уровень" Command="{Binding NewLevelCommand}" Background="#9B4D96"
-                                    Foreground="White" FontSize="13" FontWeight="Bold" Padding="10 8"
-                                    Margin="0 5" BorderThickness="0">
+                            <Button Content="➕ Новый уровень" Command="{Binding NewLevelCommand}" FontSize="13" FontWeight="Bold" Padding="10 8" Margin="0 5">
                             </Button>
-                            <Button Content="💾 Сохранить уровень" Command="{Binding SaveLevelCommand}" Background="#9B4D96"
-                                    Foreground="White" FontSize="13" FontWeight="Bold" Padding="10 8"
-                                    Margin="0 5" BorderThickness="0">
+                            <Button Content="💾 Сохранить уровень" Command="{Binding SaveLevelCommand}" FontSize="13" FontWeight="Bold" Padding="10 8" Margin="0 5">
                             </Button>
-                            <Button Content="🗑️ Удалить уровень" Command="{Binding DeleteLevelCommand}" Background="#9B4D96"
-                                    Foreground="White" FontSize="13" FontWeight="Bold" Padding="10 8"
-                                    Margin="0 5" BorderThickness="0" Cursor="Hand">
+                            <Button Content="🗑️ Удалить уровень" Command="{Binding DeleteLevelCommand}" FontSize="13" FontWeight="Bold" Padding="10 8" Margin="0 5">
                             </Button>
                             <Border Background="#6A3E6B" Height="1" Margin="0 15"/>
                             <TextBlock Text="Размер поля" Foreground="#FFD966" FontSize="14" FontWeight="Bold" Margin="0 0 0 10"/>
@@ -158,13 +168,7 @@
                     </ScrollViewer>
                 </Border>
             </Grid>
-            <Border Grid.Row="2" Background="#6A3E6B" Height="60">
-                <Button Content="← Вернуться в меню" Command="{Binding BackToMenuCommand}"
-                        Background="#9B4D96" Foreground="White" FontSize="14" FontWeight="Bold"
-                        Padding="20 10" BorderThickness="0" HorizontalAlignment="Center" 
-                        VerticalAlignment="Center">
-                </Button>
-            </Border>
+            <Border Grid.Row="2" Background="#6A3E6B" Height="60"/>
         </Grid>
     </Border>
 </Window>
